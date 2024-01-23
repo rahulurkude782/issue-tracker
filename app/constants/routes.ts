@@ -1,7 +1,7 @@
 const routes = [
   {
     label: "Dashboard",
-    href: "/dashboard",
+    href: "/",
   },
   {
     label: "Issues",
