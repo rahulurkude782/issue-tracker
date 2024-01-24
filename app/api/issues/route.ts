@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "@/prisma/client";
-
-const createIssueSchema = z.object({
-  title: z.string().max(255),
-  description: z.string().min(1),
-});
+import { createIssueSchema } from "../../ValidationSchemas";
 
 export async function GET() {
   const issues = await prisma.issue.findMany();
