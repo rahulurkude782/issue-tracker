@@ -17,6 +17,7 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import { z } from "zod";
 import { createIssueSchema } from "@/app/ValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -34,7 +35,6 @@ const NewIssuePage = () => {
   const onFormSubmit = async (data: IssueForm) => {
     try {
       const response = await axios.post("/api/issues", data);
-      console.log(response);
     } catch (error) {
       setError("An Unexpected error has occurred.");
       setTimeout(() => setError(""), 3000);
@@ -52,11 +52,10 @@ const NewIssuePage = () => {
         </Callout.Root>
       )}
       <form className=" space-y-3" onSubmit={handleSubmit(onFormSubmit)}>
-        {errors && <Text color="red">{errors.title?.message}</Text>}
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>
-        {errors && <Text color="red">{errors.description?.message}</Text>}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
@@ -64,6 +63,7 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button type="submit">Submit</Button>
       </form>
     </div>
