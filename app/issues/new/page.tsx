@@ -36,7 +36,7 @@ const NewIssuePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const onFormSubmit = async (data: IssueForm) => {
+  const onFormSubmit = handleSubmit(async (data: IssueForm) => {
     try {
       setIsLoading(true);
       const response = await axios.post("/api/issues", data);
@@ -45,10 +45,11 @@ const NewIssuePage = () => {
         setIsLoading(false);
       }
     } catch (error) {
+      setIsLoading(false);
       setError("An Unexpected error has occurred.");
       setTimeout(() => setError(""), 3000);
     }
-  };
+  });
 
   return (
     <div className="max-w-xl space-y-3">
@@ -60,7 +61,7 @@ const NewIssuePage = () => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form className=" space-y-3" onSubmit={handleSubmit(onFormSubmit)}>
+      <form className=" space-y-3" onSubmit={onFormSubmit}>
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>
