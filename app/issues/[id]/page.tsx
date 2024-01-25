@@ -1,7 +1,8 @@
-import React from "react";
-import prisma from "../../../prisma/client";
-import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
+import { Card, Flex, Heading, Text } from "@radix-ui/themes";
+import delay from "delay";
+import ReactMarkdown from "react-markdown";
+import prisma from "../../../prisma/client";
 interface Props {
   params: { id: string };
 }
@@ -12,6 +13,7 @@ const IssueDetailsPage = async ({ params }: Props) => {
       id: parseInt(params.id),
     },
   });
+
   return (
     <div>
       <Heading as="h2">{issue?.title}</Heading>
@@ -20,7 +22,9 @@ const IssueDetailsPage = async ({ params }: Props) => {
 
         <Text as="p">{issue?.createdAt.toDateString()}</Text>
       </Flex>
-      <Card>{issue?.description}</Card>
+      <Card className="prose" mt={"4"}>
+        <ReactMarkdown>{issue?.description}</ReactMarkdown>
+      </Card>
     </div>
   );
 };

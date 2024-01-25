@@ -1,15 +1,12 @@
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
-import React from "react";
+import { Table } from "@radix-ui/themes";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import IssueStatusBadge from "../components/IssueStatusBadge";
 import IssueActions from "./IssueActions";
 
 const LoadingIssuePage = () => {
   return (
     <div>
-      <IssueActions/>
+      <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
