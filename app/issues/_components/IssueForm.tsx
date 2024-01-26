@@ -1,6 +1,6 @@
 "use client";
 
-import { createIssueSchema } from "@/app/ValidationSchemas";
+import { IssueSchema } from "@/app/ValidationSchemas";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,16 +19,16 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof IssueSchema>;
 
-const IssueForm = ({ issue }: { issue: Issue }) => {
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(IssueSchema),
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const IssueForm = ({ issue }: { issue: Issue }) => {
       <form className=" space-y-3" onSubmit={onFormSubmit}>
         <TextField.Root>
           <TextField.Input
-            defaultValue={issue.title}
+            defaultValue={issue?.title}
             placeholder="Title"
             {...register("title")}
           />
@@ -71,7 +71,7 @@ const IssueForm = ({ issue }: { issue: Issue }) => {
         <Controller
           name="description"
           control={control}
-          defaultValue={issue.description}
+          defaultValue={issue?.description}
           render={({ field }) => (
             <SimpleMDE placeholder="Description" {...field} />
           )}

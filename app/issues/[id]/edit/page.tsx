@@ -11,7 +11,7 @@ const EditIssuePage = async ({ params }: Props) => {
       id: parseInt(params.id),
     },
   });
-  return <IssueForm issue={issue} />;
+  return <IssueForm issue={issue!} />;
 };
 
 export default EditIssuePage;
