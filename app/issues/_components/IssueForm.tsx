@@ -37,11 +37,12 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const onFormSubmit = handleSubmit(async (data: IssueFormData) => {
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/issues", data);
-      if (response) {
-        setIsLoading(false);
-        router.push("/issues");
-      }
+
+      if (issue) await axios.patch("/api/issues/" + issue.id, data);
+      else await axios.post("/api/issues", data);
+
+      setIsLoading(false);
+      router.push("/issues");
     } catch (error) {
       setIsLoading(false);
       setError("An Unexpected error has occurred.");
@@ -77,7 +78,9 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button type="submit">Submit {isLoading && <Spinner />}</Button>
+        <Button type="submit">
+          {issue ? "Update Issue" : "Submit Issue"} {isLoading && <Spinner />}
+        </Button>
       </form>
     </div>
   );
