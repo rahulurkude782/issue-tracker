@@ -43,6 +43,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 
       setIsLoading(false);
       router.push("/issues");
+      router.refresh();
     } catch (error) {
       setIsLoading(false);
       setError("An Unexpected error has occurred.");
