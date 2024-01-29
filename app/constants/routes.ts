@@ -5,7 +5,7 @@ const routes = [
   },
   {
     label: "Issues",
-    href: "/issues",
+    href: "/issues/list",
   },
 ];
 
