@@ -1,9 +1,9 @@
+import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import "./theme-config.css";
-import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Container, Theme } from "@radix-ui/themes";
+import "./globals.css";
+import "./theme-config.css";
 
 import Navbar from "./Navbar";
 import AuthProvider from "./auth/AuthProvider";
