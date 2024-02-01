@@ -9,6 +9,7 @@ import IssueDeleteButton from "./IssueDeleteButton";
 import { Issue } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
+import AssigneeSelect from "./AssigneeSelect";
 interface Props {
   params: { id: string };
 }
@@ -29,6 +30,7 @@ const IssueDetailsPage = async ({ params }: Props) => {
       {session && (
         <Box>
           <Flex direction={"column"} gap={"4"}>
+            <AssigneeSelect />
             <IssueEditButton issueId={issue!.id} />
             <IssueDeleteButton issue={issue} />
           </Flex>
