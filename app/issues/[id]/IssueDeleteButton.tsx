@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const IssueDeleteButton = ({ issue }: { issue: Issue }) => {
+const IssueDeleteButton = ({ issue }: { issue: Issue | null }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
@@ -14,7 +14,7 @@ const IssueDeleteButton = ({ issue }: { issue: Issue }) => {
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete("/api/issues/" + issue.id);
+      await axios.delete("/api/issues/" + issue?.id);
       router.push("/issues/list");
       router.refresh();
     } catch (error) {
@@ -33,7 +33,7 @@ const IssueDeleteButton = ({ issue }: { issue: Issue }) => {
         </AlertDialog.Trigger>
         <AlertDialog.Content className="space-y-4">
           <AlertDialog.Title>
-            Confirm Deletion of {issue.title}
+            Confirm Deletion of {issue?.title}
           </AlertDialog.Title>
           <AlertDialog.Description>
             Do you really want to delete this issue.This action can&apos;t be
