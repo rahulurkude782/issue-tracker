@@ -7,12 +7,8 @@ import axios from "axios";
 import Skeleton from "@/app/components/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 
-const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-  const {
-    data: users,
-    isLoading,
-    error,
-  } = useQuery<User[]>({
+const useUsers = () =>
+  useQuery<User[]>({
     queryKey: ["users"],
     queryFn: () =>
       axios
@@ -22,6 +18,9 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     staleTime: 60 * 1000,
     retry: 3,
   });
+
+const AssigneeSelect = ({ issue }: { issue: Issue }) => {
+  const { data: users, isLoading, error } = useUsers();
 
   if (isLoading) return <Skeleton />;
 
