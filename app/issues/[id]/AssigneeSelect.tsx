@@ -5,6 +5,7 @@ import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Skeleton from "@/app/components/Skeleton";
+import toast, { Toaster } from "react-hot-toast";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const {
@@ -25,27 +26,32 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   if (isLoading) return <Skeleton />;
 
   return (
-    <Select.Root
-      onValueChange={(userId) => {
-        axios.patch("/api/issues/" + issue.id, { assignToUserId: userId });
-      }}
-      defaultValue={issue.assignToUserId || " "}
-    >
-      <Select.Trigger placeholder="Asign..." />
-      <Select.Content>
-        <Select.Group>
-          <Select.Item value="0" disabled>
-            Suggesations
-          </Select.Item>
-          <Select.Item value=" ">Unassign</Select.Item>
-          {users?.map((user) => (
-            <Select.Item key={user.id} value={user.id}>
-              Rahul
+    <>
+      <Select.Root
+        onValueChange={(userId) => {
+          axios
+            .patch("/api/issues/" + issue.id, { assignToUserId: userId })
+            .catch((error) => toast.error("An Unexpected Error Occurred!"));
+        }}
+        defaultValue={issue.assignToUserId || " "}
+      >
+        <Select.Trigger placeholder="Asign..." />
+        <Select.Content>
+          <Select.Group>
+            <Select.Item value="0" disabled>
+              Suggesations
             </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+            <Select.Item value=" ">Unassign</Select.Item>
+            {users?.map((user) => (
+              <Select.Item key={user.id} value={user.id}>
+                Rahul
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
   );
 };
 
