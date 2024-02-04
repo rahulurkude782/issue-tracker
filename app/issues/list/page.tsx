@@ -8,6 +8,7 @@ import NextLink from "next/link";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, { IssueQuery, columnNames } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQuery;
@@ -53,5 +54,10 @@ const IssuePage = async ({ searchParams }: Props) => {
 };
 
 export const revalidate = 30;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issues",
+  description: "View list of issues",
+};
 
 export default IssuePage;

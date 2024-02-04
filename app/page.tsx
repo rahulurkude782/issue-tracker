@@ -1,13 +1,35 @@
-import { getServerSession } from "next-auth";
-import Pagination from "./components/Pagination";
-import { useSearchParams } from "next/navigation";
-import LatestIssues from "./LatestIssues";
+import { Flex, Grid } from "@radix-ui/themes";
+import IssueChart from "./IssueChart";
+import prisma from "@/prisma/client";
 import IssueSummery from "./IssueSummery";
+import LatestIssues from "./LatestIssues";
+import { Metadata } from "next";
 
 export default async function Home() {
+  const open = await prisma.issue.count({
+    where: { status: "OPEN" },
+  });
+  const inProgress = await prisma.issue.count({
+    where: { status: "IN_PROGRESS" },
+  });
+  const closed = await prisma.issue.count({
+    where: { status: "CLOSED" },
+  });
+
   return (
     <main>
-      <IssueSummery open={10} inProgress={90} closed={2} />
+      <Grid columns={{ initial: "1", md: "2" }} gap="5">
+        <Flex direction="column" gap="5">
+          <IssueSummery open={open} inProgress={inProgress} closed={closed} />
+          <IssueChart open={open} inProgress={inProgress} closed={closed} />
+        </Flex>
+        <LatestIssues />
+      </Grid>
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Dashboard",
+  description: "View Summery of issues.",
+};

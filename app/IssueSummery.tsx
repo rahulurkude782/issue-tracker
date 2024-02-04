@@ -1,7 +1,6 @@
 import { Status } from "@prisma/client";
 import { Card, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
-import React from "react";
 
 interface Props {
   open: number;
@@ -23,8 +22,12 @@ const IssueSummery = ({ open, inProgress, closed }: Props) => {
   return (
     <Flex gap="4">
       {cards.map((card) => (
-        <Link key={card.label} href={"/issues/list?status=" + card.status}>
-          <Card className="w-52">
+        <Link
+          key={card.label}
+          href={"/issues/list?status=" + card.status}
+          className="w-full"
+        >
+          <Card>
             <Flex direction="column">
               <Text className="font-medium text-sm">{card.label}</Text>
               <Text className="font-bold">{card.value}</Text>
